@@ -10,8 +10,8 @@
 
 
 <!-- Start vertical navbar -->
-    <div class="vertical-nav navbar-dark bg-dark" id="vertical-nav">
-  <div class="py-4 px-3 mb-4 bg-light">
+    <nav class="vertical-nav navbar-dark bg-dark" id="vertical-nav">
+  <div class="py-2 px-3 mb-4 bg-dark text-light">
     <div class="media d-flex align-items-center">
       <div class="media-body">
         <h4 class="m-0">Stock Simulator</h4>
@@ -21,37 +21,59 @@
 
   <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Portfolio</p>
 
-  <ul class="nav flex-column bg-white mb-0">
+
+  <ul class="nav flex-column bg-grey mb-2">
+    {% if user.is_authenticated %}
     <li class="nav-item">
-      <a href="#" class="nav-link text-light font-italic bg-dark">Home</a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link text-light font-italic bg-dark">About</a>
+      <a href="#" class="nav-link text-dark font-italic bg-light">Dashboard</a>
     </li>
 
     <li class="nav-item">
-      <a href="#" class="nav-link text-light font-italic bg-dark">Stock</a>
+      <a href="#" class="nav-link text-dark font-italic bg-light">WatchList</a>
     </li>
-  </ul></div>
+
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark font-italic bg-light">Alerts</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark font-italic bg-light">Transactions</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark font-italic bg-light">Newsfeed</a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark font-italic bg-light">Settings</a>
+    </li>
+    {% else %}
+    <p class="text-white font-weight-bold px-3 small pb-4 mb-0">You need to login to access these fields!</p>
+    {% endif %}
+  </ul>
+    </nav>
   </head>
 <!-- End vertical navbar -->
 
+
   <!-- Start horizontal navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="container-fluid px-2 mb-0 small  pb-2">
   <!--    <a class="navbar-brand" href="{% url 'home' %}">Stock Portfolio</a>-->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-        </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 inline-group">
+        {% if user.is_authenticated %}
         <form action ="{% url 'home' %}" class="d-flex" role="search" method="POST">
           {% csrf_token %}
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="ticker">
-          <button class="btn btn-outline-secondary form-control me-2" type="submit">Stock Quote</button>
+          <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search" name="ticker">
+          <button class="btn btn-outline-secondary form-control me-1 bg-dark text-light" type="submit">Stock Quote</button>
         </form>
+          </ul>
+        <a href="{% url 'logout'%}" class="btn btn-outline-light me-0">Logout</a>
+        {% else %}
+        <a href="{% url 'login'%}" class="btn btn-outline-light me-0">Login</a>
+        <a href="{% url 'signup'%}" class="btn btn-outline-light me-0">Signup</a>
+        {% endif %}
       </div>
     </div>
   </nav>

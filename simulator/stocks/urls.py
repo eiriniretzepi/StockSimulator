@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    # path('', views.home, name="home")
+    path('portfolio', views.list, name="portfolio"),
+    path('', views.stock_info)
 ]

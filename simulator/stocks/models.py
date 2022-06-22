@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 class Portfolio(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cash = models.IntegerField(default=20000, editable=True)
     #Profit/loss
 
 

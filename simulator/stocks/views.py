@@ -8,22 +8,15 @@ def list(request):
 
 
 def stock_info(request):
-    import requests
-    import json
+    import yfinance as yf
 
     if request.method == "POST":
-        ticker = request.POST['ticker']
+        get_ticker = request.POST['ticker']
 
-        # sk_bf8836850ac8416a927deaeab73b3f0b
-        api_request = requests.get(
-            "https://cloud.iexapis.com/stable/stock/" + ticker + "/quote?token=sk_bf8836850ac8416a927deaeab73b3f0b")
+        ticker = yf.Ticker(get_ticker)
+        api = ticker.info
 
-        try:
-            api = json.loads(api_request.content)
-        except Exception as e:
-            api = "Error..."
+        if api.get("currentPrice") is None:
+            api = "Error"
 
-        return render(request, 'home.html', {'api': api})
-
-    else:
-        return render(request, 'stock_info.html', {'ticker': "Enter a Ticker Symbol Above "})
+    return render(request, 'stock_info.html', {'api': api})

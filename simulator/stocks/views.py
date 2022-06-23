@@ -20,3 +20,10 @@ def stock_info(request):
             api = "Error"
 
     return render(request, 'stock_info.html', {'api': api})
+
+
+def buy_sell(request):
+    import yfinance as yf
+
+     # if request.method == "GET":
+

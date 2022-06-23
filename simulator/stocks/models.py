@@ -3,22 +3,24 @@ from django.contrib.auth.models import User
 
 
 class Portfolio(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     cash = models.IntegerField(default=20000, editable=True)
-    #Profit/loss
+    cashInvested = models.IntegerField(default=0, editable=True)
 
 
 class Stock(models.Model):
-    bought = models.BooleanField(default=True)
     name = models.CharField(max_length=50)
-    numberOfStocks = models.IntegerField()
-    date = models.DateField()
-    stockPrice = models.FloatField()
+    stocksOwned = models.IntegerField()
+    priceBought = models.FloatField()  # the price of the stock when it was bought
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
 
 class Transaction(models.Model):
-    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    stockName = models.CharField(max_length=50)
+    bought = models.BooleanField(default=True)
+    numberOfStocks = models.IntegerField()
+    stockPrice = models.FloatField()
+    date = models.DateField()
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
 
@@ -31,6 +33,4 @@ class Alert(models.Model):
     stockName = models.CharField(max_length=50)
     alertPrice = models.FloatField()
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-
-
 
